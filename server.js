@@ -49,8 +49,41 @@ app.get('/flights/new', (req, res) => {
 app.post('/flights', async (req, res) => {
   try {
     const createdFlight = await Flight.create(req.body)
+    console.log(req.body)
 
     res.status(201).redirect('/flights')
+  } catch (err) {
+    res.status(400).send(err)
+  }
+})
+
+app.get('/flights/:id', async (req, res) => {
+  try {
+    const foundFlight = await Flight.findById(req.params.id)
+    res.render('Show', {
+      flight: foundFlight,
+    })
+    
+  } catch (err) {
+    res.status(400).send(err)
+  }
+})
+
+/////////////////////////////////////////////////////////////
+
+app.get(`/flights/:id/edit`, (req, res) => {
+  res.render('NewDest')
+})
+
+app.post('/flights/:id', async (req, res) => {
+  try {
+    const updatedFlight = await Flight.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    )
+
+    res.render('Show', { flight: updatedFlight })
   } catch (err) {
     res.status(400).send(err)
   }

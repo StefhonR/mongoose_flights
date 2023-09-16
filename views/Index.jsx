@@ -17,11 +17,11 @@ class Index extends React.Component {
         <ul>
         {
           flights.map((flight, i) => {
-            console.dir(flight.departs)
             return (
               <li key={i}>
+                {flight.airline.charAt(0).toUpperCase() + flight.airline.slice(1)} #{flight.flightNum} {" "}
                 <a href={`/flights/${flight._id}`}>
-                  {flight.airline.charAt(0).toUpperCase() + flight.airline.slice(1)}#{flight.flightNum}
+                  details
                 </a>
                 <p>
                 {flight.departs.toLocaleString()}
